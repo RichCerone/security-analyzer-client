@@ -1,0 +1,61 @@
+{
+    "SecuritySpecs": [
+        {
+            "RepoOwner": "karma-runner",
+            "RepoName": "karma",
+            "Cves": [
+                "CVE-2021-2349"
+            ],
+            "VersionTagPerfix": "v"
+        },
+        {
+            "RepoOwner": "log4js-node",
+            "RepoName": "log4js-node",
+            "Cves": [
+                "CVE-2022-21704"
+            ],
+            "VersionTagPerfix": "v"
+        },
+        {
+            "RepoOwner": "electron",
+            "RepoName": "electron",
+            "Cves": [
+                "CVE-2023-4863"
+            ],
+            "VersionTagPerfix": "v"
+        },
+        {
+            "RepoOwner": "mongodb",
+            "RepoName": "mongo",
+            "Cves": [
+                "CVE-2022-24272"
+            ],
+            "VersionTagPerfix": "r"
+        },
+        {
+            "RepoOwner": "django",
+            "RepoName": "django",
+            "Cves": [
+                "CVE-2023-36053",
+                "CVE-2023-31047"
+            ],
+            "VersionTagPerfix": ""
+        },
+        {
+            "RepoOwner": "dotnet",
+            "RepoName": "runtime",
+            "Cves": [
+                "CVE-2023-38180"
+            ],
+            "VersionTagPerfix": "v"
+        },
+        {
+            "RepoOwner": "square",
+            "RepoName": "Retrofit",
+            "Cves": [
+                "CVE-2018-1000844"
+            ],
+            "VersionTagPerfix": "parent-"
+        }
+    ]
+}
