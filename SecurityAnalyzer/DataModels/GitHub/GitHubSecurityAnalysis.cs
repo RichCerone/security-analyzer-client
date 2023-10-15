@@ -7,8 +7,13 @@ namespace SecurityAnalyzer.DataModels.GitHub
     /// Represents a security analysis of a repository 
     /// in GitHub.
     /// </summary>
-    internal class GitHubSecurityAnalysis
+    public class GitHubSecurityAnalysis
     {
+        /// <summary>
+        /// Name of the repo being analyzed.
+        /// </summary>
+        public string RepoName { get; set; }
+
         /// <summary>
         /// The GitHub advisory information.
         /// </summary>
@@ -47,6 +52,9 @@ namespace SecurityAnalyzer.DataModels.GitHub
         /// <summary>
         /// Creates a new <see cref="GitHubSecurityAnalysis"/>.
         /// </summary>
+        /// <param name="repoName">
+        /// The name of the repo being analyzed.
+        /// </param>
         /// <param name="advisory">
         /// The GitHub advisory data.
         /// </param>
@@ -62,8 +70,9 @@ namespace SecurityAnalyzer.DataModels.GitHub
         /// <param name="message">
         /// Message regarding this analysis.
         /// </param>
-        public GitHubSecurityAnalysis(Advisory? advisory, GitHubCommit? commit, GitHubPullRequest? pullRequest, GitHubRelease? release, string message = "")
+        public GitHubSecurityAnalysis(string repoName, Advisory? advisory, GitHubCommit? commit, GitHubPullRequest? pullRequest, GitHubRelease? release, string message = "")
         {
+            RepoName = repoName;
             Advisory = advisory;
             Commit = commit;
             PullRequest = pullRequest;

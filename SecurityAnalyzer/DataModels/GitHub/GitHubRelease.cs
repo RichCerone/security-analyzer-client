@@ -5,13 +5,13 @@ namespace SecurityAnalyzer.DataModels.GitHub
     /// <summary>
     /// Represents a release on GitHub.
     /// </summary>
-    internal class GitHubRelease
+    public class GitHubRelease
     {
         [JsonProperty("message")]
         public ReleaseMessage? Message { get; set; }
     }
 
-    internal class ReleaseMessage
+    public class ReleaseMessage
     {
         [JsonProperty("url")]
         public string ReleaseUrl { get; set; } = string.Empty;

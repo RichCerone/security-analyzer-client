@@ -5,13 +5,13 @@ namespace SecurityAnalyzer.DataModels.GitHub
     /// <summary>
     /// Reperesents a pull request in GitHub.
     /// </summary>
-    internal class GitHubPullRequest
+    public class GitHubPullRequest
     {
         [JsonProperty("message")]
         public PullRequestMessage? Message { get; set; }
     }
 
-    internal class PullRequestMessage
+    public class PullRequestMessage
     {
         /// <summary>
         /// The date and time this pull request was completed and merged.

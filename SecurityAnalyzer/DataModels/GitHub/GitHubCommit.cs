@@ -5,7 +5,7 @@ namespace SecurityAnalyzer.DataModels.GitHub
     /// <summary>
     /// Represents a GitHub commit.
     /// </summary>
-    internal class GitHubCommit
+    public class GitHubCommit
     {
         [JsonProperty("message")]
         public CommitMessage? Message { get; set; }
@@ -14,7 +14,7 @@ namespace SecurityAnalyzer.DataModels.GitHub
     /// <summary>
     /// Represents the message in the commit.
     /// </summary>
-    internal class CommitMessage
+    public class CommitMessage
     {
         [JsonProperty("commit")]
         public Commit? Commit { get; set; }
@@ -23,7 +23,7 @@ namespace SecurityAnalyzer.DataModels.GitHub
     /// <summary>
     /// Represents a commit.
     /// </summary>
-    internal class Commit
+    public class Commit
     {
         [JsonProperty("author")]
         public Author? Author { get; set; }
@@ -32,7 +32,7 @@ namespace SecurityAnalyzer.DataModels.GitHub
     /// <summary>
     /// Represents the commit author.
     /// </summary>
-    internal class Author
+    public class Author
     {
         [JsonProperty ("name")]
         public string Name { get; set; } = string.Empty;

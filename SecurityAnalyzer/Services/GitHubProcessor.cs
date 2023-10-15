@@ -65,7 +65,7 @@ namespace SecurityAnalyzer.Services
                     {
                         // Get initial advisory.
                         Advisory? advisory = await GetAdvisoryAsync(spec.RepoName, cve);
-                        GitHubSecurityAnalysis analysis = new(advisory, null, null, null);
+                        GitHubSecurityAnalysis analysis = new(spec.RepoName, advisory, null, null, null);
 
                         if (advisory == null)
                         {

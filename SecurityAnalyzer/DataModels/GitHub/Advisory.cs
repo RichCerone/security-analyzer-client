@@ -5,7 +5,7 @@ namespace SecurityAnalyzer.DataModels.GitHub
     /// <summary>
     /// Represents a GitHub Security Advisory.
     /// </summary>
-    internal class Advisory
+    public class Advisory
     {
         /// <summary>
         /// The GitHub Security Advisory id.
