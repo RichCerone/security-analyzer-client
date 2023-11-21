@@ -72,5 +72,25 @@ namespace SecurityAnalyzer.Helper
 
             return pullNumbers;
         }
+
+
+        public static IEnumerable<string> AnalyzeForGoogleGitCommits(IEnumerable<string> urls)
+        {
+            List<string> commitUrls = new();
+
+            string googleGitUrlPattern = "https://android\\.googlesource\\.com/platform/[A-Za-z]+/[A-Za-z]+/[A-Za-z]+/\\+/[A-Za-z0-9]+";
+            Regex regex = new(googleGitUrlPattern, RegexOptions.Compiled, TimeSpan.FromSeconds(90));
+
+            foreach (string url in urls)
+            {
+                Match match = regex.Match(url);
+                if (match.Success)
+                {
+                    commitUrls.Add(url);
+                }
+            }
+
+            return commitUrls;
+        }
     }
 }

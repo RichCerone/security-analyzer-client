@@ -1,9 +1,14 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using Polly;
 using SecurityAnalyzer.DataModels;
 using SecurityAnalyzer.DataModels.GitHub;
+using SecurityAnalyzer.DataModels.Google;
+using SecurityAnalyzer.Exceptions;
 using SecurityAnalyzer.Helper;
 using System.Collections.Specialized;
+using System.Data;
+using System.Net;
 using System.Web;
 
 namespace SecurityAnalyzer.Services
@@ -15,6 +20,7 @@ namespace SecurityAnalyzer.Services
     internal class GitHubProcessor
     {
         private readonly IConfiguration _config;
+        private readonly GoogleGitProcessor _googleGitProcessor;
         private readonly HttpClient httpClient;
 
         /// <summary>
@@ -23,12 +29,16 @@ namespace SecurityAnalyzer.Services
         /// <param name="config">
         /// <see cref="IConfiguration"/> that contains configuration settings.
         /// </param>
+        /// <param name="googleGitProcessor">
+        /// Process Google Git site data.
+        /// </param>
         /// <exception cref="ArgumentException">
         /// Thrown if the GitHubEndpoint is undefined in the <see cref="IConfiguration"/>.
         /// </exception>
-        public GitHubProcessor(IConfiguration config)
+        public GitHubProcessor(IConfiguration config, GoogleGitProcessor googleGitProcessor)
         {
             _config = config;
+            _googleGitProcessor = googleGitProcessor;
 
             httpClient = new HttpClient()
             {
@@ -58,104 +68,24 @@ namespace SecurityAnalyzer.Services
                     throw new InvalidOperationException("No security specs defined.");
                 }
 
-                // Start foreach on repo and foreach on CVEs
+                ResiliencePipeline retryPolicy = new ResiliencePipelineBuilder()
+               .AddRetry(new Polly.Retry.RetryStrategyOptions()
+               {
+                   ShouldHandle = new PredicateBuilder().Handle<RateLimitException>(),
+                   MaxRetryAttempts = 3,
+                   Delay = TimeSpan.FromSeconds(3900) // Wait 65 minutes.
+               })
+               .Build();
+
+                // Start foreach on repo and foreach on CVEs.
                 foreach (SecuritySpec spec in specs)
                 {
                     foreach (string cve in spec.Cves)
-                    {
-                        // Get initial advisory.
-                        Advisory? advisory = await GetAdvisoryAsync(spec.RepoName, cve);
-                        GitHubSecurityAnalysis analysis = new(spec.RepoName, advisory, null, null, null);
+                    {                       
+                        GitHubSecurityAnalysis analysis = await retryPolicy.ExecuteAsync(async (token) => await ProcessAdvisoryAsync(spec, cve).ConfigureAwait(false))
+                            .ConfigureAwait(false);
 
-                        if (advisory == null)
-                        {
-                            string message = $"No advisories could be retrieved using repo: '{spec.RepoName}' and CVE: '{cve}'";
-                            analysis.Message = message;
-
-                            analyses.Add(analysis);
-                            continue;
-                        }
-
-                        // For each advisory, look for valid GitHub commit urls.
-                        if (advisory.References != null)
-                        {
-                            List<CommitHash> commitHashes = SearchReferencesForCommits(advisory.References).ToList();
-
-                            // If commit urls exist, GET commits and look for commit date.
-                            if (commitHashes.Any())
-                            {
-                                List<GitHubCommit> commits = new();   
-                                foreach (CommitHash commitHash in commitHashes)
-                                {
-                                    GitHubCommit? commit = await GetCommitAsync(commitHash.RepoOwner, commitHash.Repo, commitHash.Hash);
-                                    if (commit != null && commit.Message != null && commit.Message.Commit != null)
-                                    {
-                                        commits.Add(commit);
-                                    }
-                                }
-
-                                GitHubCommit? gitHubCommit = commits.OrderByDescending(c => c?.Message?.Commit?.Author?.Date).FirstOrDefault();
-                                analysis.Commit = gitHubCommit;
-
-                                if (gitHubCommit != null && gitHubCommit.Message != null && gitHubCommit.Message.Commit.Author.Date.HasValue)
-                                {
-                                    analyses.Add(analysis);
-                                    continue;
-                                }
-                            }
-
-                            // For each advisory, look for valid GitHub Pull Request urls.
-                            List<PullRequest> pullRequests = SearchReferencesForPullRequests(advisory.References).ToList();
-                            if (pullRequests.Any())
-                            {
-                                List<GitHubPullRequest> gitHubPullRequests = new();
-                                foreach (PullRequest pull in pullRequests)
-                                {
-                                    GitHubPullRequest? pullRequest = await GetPullRequestAsync(pull.RepoOwner, pull.Repo, pull.Id);
-                                    if (pullRequest != null && pullRequest.Message != null && pullRequest.Message.MergedAt != null)
-                                    {
-                                        gitHubPullRequests.Add(pullRequest);
-                                    }
-                                }
-
-                                GitHubPullRequest? gitHubPullRequest = gitHubPullRequests.OrderByDescending(p => p.Message?.MergedAt).FirstOrDefault();
-                                analysis.PullRequest = gitHubPullRequest;
-                                
-                                if (gitHubPullRequest != null && gitHubPullRequest.Message != null && gitHubPullRequest.Message.MergedAt.HasValue)
-                                {
-                                    analyses.Add(analysis);
-                                    continue;
-                                }
-                            }
-                        }
-
-                        // If no commits, look for releases by patched tags starting from earliest release.
-                        if (advisory.Vulnerabilities != null)
-                        {
-                            List<GitHubRelease> releases = new();
-                            foreach (Vulnerability vulnerability in advisory.Vulnerabilities)
-                            {
-                                // Guess the release tag.
-                                string tag = $"{spec.VersionTagPerfix}{vulnerability.FirstPatchedVersion}";
-                                GitHubRelease? release = await GetRelaseAsync(spec.RepoOwner, spec.RepoName, tag);
-                                
-                                if (release != null && release.Message != null && release.Message.CreatedAt.HasValue) 
-                                { 
-                                    releases.Add(release);
-                                }
-                            }
-
-                            if (releases.Any())
-                            {
-                                GitHubRelease? release = releases.OrderByDescending(r => r.Message?.CreatedAt).FirstOrDefault();
-                                if (release != null)
-                                {
-                                    analysis.Release = release;
-                                }                                
-                            }
-                        }
-
-                        analyses.Add(analysis);
+                       analyses.Add(analysis);
                     }
                 }
 
@@ -167,6 +97,121 @@ namespace SecurityAnalyzer.Services
             }
             
             return analyses;
+        }
+
+        private async Task<GitHubSecurityAnalysis> ProcessAdvisoryAsync(SecuritySpec spec, string cve)
+        {
+            // Get initial advisory.
+            Advisory? advisory = await GetAdvisoryAsync(spec.RepoName, cve);
+            GitHubSecurityAnalysis analysis = new(spec.RepoName, advisory, null, null, null, null);
+
+            if (advisory == null)
+            {
+                string message = $"No advisories could be retrieved using repo: '{spec.RepoName}' and CVE: '{cve}'";
+                analysis.Message = message;
+
+                return analysis;
+            }
+
+            // For each advisory, look for valid GitHub commit urls.
+            if (advisory.References != null)
+            {
+                List<CommitHash> commitHashes = SearchReferencesForCommits(advisory.References).ToList();
+                List<string> googleGitUrls = SearchReferencesForGoogleGitCommits(advisory.References).ToList();
+
+                // If commit urls exist, GET commits and look for commit date.
+                if (commitHashes.Any())
+                {
+                    List<GitHubCommit> commits = new();
+                    foreach (CommitHash commitHash in commitHashes)
+                    {
+                        GitHubCommit? commit = await GetCommitAsync(commitHash.RepoOwner, commitHash.Repo, commitHash.Hash);
+                        if (commit != null && commit.Message != null && commit.Message.Commit != null)
+                        {
+                            commits.Add(commit);
+                        }
+                    }
+
+                    GitHubCommit? gitHubCommit = commits.OrderByDescending(c => c?.Message?.Commit?.Author?.Date).FirstOrDefault();
+                    analysis.GitHubCommit = gitHubCommit;
+
+                    if (gitHubCommit != null && gitHubCommit.Message != null && gitHubCommit.Message.Commit.Author.Date.HasValue)
+                    {
+                        return analysis;
+                    }
+                }
+                else if (googleGitUrls.Any()) // If Google git URLs exist, get commit data.
+                {
+                    List<GoogleCommit?> commits = new();
+                    foreach (string googleCommitUrl in googleGitUrls)
+                    {
+                        GoogleCommit? commit = await _googleGitProcessor.GetGoogleCommitAsync(googleCommitUrl);
+                        if (commit != null)
+                        {
+                            commits.Add(commit);
+                        }
+                    }
+
+                    GoogleCommit? googleCommit = commits.OrderByDescending(c => c?.DateTime).FirstOrDefault();
+                    analysis.GoogleGitCommit = googleCommit;
+
+                    if (googleCommit != null)
+                    {
+                        return analysis;
+                    }
+                }
+
+                // For each advisory, look for valid GitHub Pull Request urls.
+                List<PullRequest> pullRequests = SearchReferencesForPullRequests(advisory.References).ToList();
+                if (pullRequests.Any())
+                {
+                    List<GitHubPullRequest> gitHubPullRequests = new();
+                    foreach (PullRequest pull in pullRequests)
+                    {
+                        GitHubPullRequest? pullRequest = await GetPullRequestAsync(pull.RepoOwner, pull.Repo, pull.Id);
+                        if (pullRequest != null && pullRequest.Message != null && pullRequest.Message.MergedAt != null)
+                        {
+                            gitHubPullRequests.Add(pullRequest);
+                        }
+                    }
+
+                    GitHubPullRequest? gitHubPullRequest = gitHubPullRequests.OrderByDescending(p => p.Message?.MergedAt).FirstOrDefault();
+                    analysis.PullRequest = gitHubPullRequest;
+
+                    if (gitHubPullRequest != null && gitHubPullRequest.Message != null && gitHubPullRequest.Message.MergedAt.HasValue)
+                    {
+                        return analysis;
+                    }
+                }
+            }
+
+            // If no commits, look for releases by patched tags starting from earliest release.
+            if (advisory.Vulnerabilities != null)
+            {
+                List<GitHubRelease> releases = new();
+                foreach (Vulnerability vulnerability in advisory.Vulnerabilities)
+                {
+                    // Guess the release tag.
+                    string tag = $"{spec.VersionTagPerfix}{vulnerability.FirstPatchedVersion}";
+                    GitHubRelease? release = await GetRelaseAsync(spec.RepoOwner, spec.RepoName, tag);
+
+                    if (release != null && release.Message != null && release.Message.CreatedAt.HasValue)
+                    {
+                        releases.Add(release);
+                    }
+                }
+
+                if (releases.Any())
+                {
+                    GitHubRelease? release = releases.OrderByDescending(r => r.Message?.CreatedAt).FirstOrDefault();
+                    if (release != null)
+                    {
+                        analysis.Release = release;
+                    }
+                }
+            }
+
+            return analysis;
         }
 
         /// <summary>
@@ -262,6 +307,22 @@ namespace SecurityAnalyzer.Services
             return results.DistinctBy(r => r.Id);
         }
 
+        private static IEnumerable<string> SearchReferencesForGoogleGitCommits(IEnumerable<string> references)
+        {
+            List<string> results = new();
+            try
+            {
+                results.AddRange(UrlHelper.AnalyzeForGoogleGitCommits(references));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"SearchReferencesForGoogleGitCommits Error: {ex}");
+                throw;
+            }
+
+            return results.Distinct();
+        }
+
         /// <summary>
         /// Gets an advisory from GitHub.
         /// </summary>
@@ -288,6 +349,12 @@ namespace SecurityAnalyzer.Services
                 query["repo"] = repo;
 
                 HttpResponseMessage response = await httpClient.GetAsync($"advisories?{query}");
+                
+                if (response.StatusCode == HttpStatusCode.Forbidden) // Rate limit hit.
+                {
+                    throw new RateLimitException("Rate limit has been reached.");
+                }
+
                 response.EnsureSuccessStatusCode();
 
                 string r = await response.Content.ReadAsStringAsync();
@@ -298,13 +365,18 @@ namespace SecurityAnalyzer.Services
                     advisory = advisories.Advisories.First();
                 }
             }
+            catch (RateLimitException ex)
+            {
+                Console.WriteLine($"GetAdvisoryAsync Warning: {ex}");
+                throw;
+            }
             catch (HttpRequestException ex)
             {
-                Console.WriteLine($"GetAdvisoriesAsync HTTP Error: {ex}");
+                Console.WriteLine($"GetAdvisoryAsync HTTP Error: {ex}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"GetAdvisoriesAsync Error: {ex}");
+                Console.WriteLine($"GetAdvisoryAsync Error: {ex}");
                 throw;
             }
 
@@ -338,9 +410,20 @@ namespace SecurityAnalyzer.Services
                 query["ref"] = commitRef;
 
                 HttpResponseMessage response = await httpClient.GetAsync($"commit?{query}");
+
+                if (response.StatusCode == HttpStatusCode.Forbidden) // Rate limit hit.
+                {
+                    throw new RateLimitException("Rate limit has been reached.");
+                }
+
                 response.EnsureSuccessStatusCode();
 
                 commit = JsonConvert.DeserializeObject<GitHubCommit>(await response.Content.ReadAsStringAsync());
+            }
+            catch (RateLimitException ex)
+            {
+                Console.WriteLine($"GetCommitAsync Warning: {ex}");
+                throw;
             }
             catch (HttpRequestException ex)
             {
@@ -374,9 +457,20 @@ namespace SecurityAnalyzer.Services
                 query["pullNumber"] = pullNumber.ToString();
 
                 HttpResponseMessage response = await httpClient.GetAsync($"pull?{query}");
+
+                if (response.StatusCode == HttpStatusCode.Forbidden) // Rate limit hit.
+                {
+                    throw new RateLimitException("Rate limit has been reached.");
+                }
+
                 response.EnsureSuccessStatusCode();
 
                 pullRequest = JsonConvert.DeserializeObject<GitHubPullRequest>(await response.Content.ReadAsStringAsync());
+            }
+            catch (RateLimitException ex)
+            {
+                Console.WriteLine($"GetPullRequestAsync Warning: {ex}");
+                throw;
             }
             catch (HttpRequestException ex)
             {
@@ -421,6 +515,11 @@ namespace SecurityAnalyzer.Services
                 response.EnsureSuccessStatusCode();
 
                 release = JsonConvert.DeserializeObject<GitHubRelease>(await response.Content.ReadAsStringAsync());
+            }
+            catch (RateLimitException ex)
+            {
+                Console.WriteLine($"GetRelaseAsync Warning: {ex}");
+                throw;
             }
             catch (HttpRequestException ex)
             {

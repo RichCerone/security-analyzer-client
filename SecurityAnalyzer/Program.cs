@@ -9,7 +9,7 @@ static async Task RunAsync()
             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
             .Build();
 
-    GitHubProcessor gitHubProcessor = new(configuration);
+    GitHubProcessor gitHubProcessor = new(configuration, new GoogleGitProcessor());
 
     IEnumerable<GitHubSecurityAnalysis> analyses = await gitHubProcessor.GetSecurityAnalysisAsync();
     foreach (GitHubSecurityAnalysis analysis in analyses)
@@ -25,19 +25,26 @@ static async Task RunAsync()
                 analysis.StartOfExposure = analysis.Advisory.PublishedAt;
             }
         }
-        
-        if (analysis.Commit != null && analysis.Commit.Message != null)
+
+        List<DateTime?> dates = new();
+        if (analysis.GitHubCommit != null && analysis.GitHubCommit.Message != null)
         {
-            analysis.EndOfExposure = analysis.Commit?.Message?.Commit?.Author?.Date;
+            dates.Add(analysis.GitHubCommit?.Message?.Commit?.Author?.Date);
+        }
+        else if (analysis.GoogleGitCommit != null && analysis.GoogleGitCommit.DateTime != null)
+        {
+            dates.Add(analysis.GoogleGitCommit.DateTime);
         }
         else if (analysis.PullRequest != null && analysis.PullRequest.Message != null)
         {
-            analysis.EndOfExposure = analysis.PullRequest?.Message?.MergedAt;
+            dates.Add(analysis.PullRequest?.Message?.MergedAt);
         }
         else if (analysis.Release != null && analysis.Release.Message != null)
         {
-            analysis.EndOfExposure = analysis.Release?.Message?.CreatedAt;
+            dates.Add(analysis.Release?.Message?.CreatedAt);
         }
+
+        analysis.EndOfExposure = dates.OrderByDescending(d => d).FirstOrDefault();
     }
     
     await ReportService.GenerateReportAsync(analyses);

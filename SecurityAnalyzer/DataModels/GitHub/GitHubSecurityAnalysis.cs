@@ -1,4 +1,5 @@
 ﻿
+using SecurityAnalyzer.DataModels.Google;
 using SecurityAnalyzer.Helper;
 
 namespace SecurityAnalyzer.DataModels.GitHub
@@ -22,7 +23,12 @@ namespace SecurityAnalyzer.DataModels.GitHub
         /// <summary>
         /// The GitHub commit information.
         /// </summary>
-        public GitHubCommit? Commit { get; set; }
+        public GitHubCommit? GitHubCommit { get; set; }
+
+        /// <summary>
+        /// The Google Git commit information.
+        /// </summary>
+        public GoogleCommit? GoogleGitCommit { get; set; }
 
         /// <summary>
         /// The GitHub Pull Request information.
@@ -58,8 +64,11 @@ namespace SecurityAnalyzer.DataModels.GitHub
         /// <param name="advisory">
         /// The GitHub advisory data.
         /// </param>
-        /// <param name="commit">
+        /// <param name="gitHubCommit">
         /// The GitHub commit data.
+        /// </param>
+        /// <param name="googleCommit">
+        /// The Google Git commit data.
         /// </param>
         /// <param name="pullRequest">
         /// The GitHub pull request data.
@@ -70,11 +79,12 @@ namespace SecurityAnalyzer.DataModels.GitHub
         /// <param name="message">
         /// Message regarding this analysis.
         /// </param>
-        public GitHubSecurityAnalysis(string repoName, Advisory? advisory, GitHubCommit? commit, GitHubPullRequest? pullRequest, GitHubRelease? release, string message = "")
+        public GitHubSecurityAnalysis(string repoName, Advisory? advisory, GitHubCommit? gitHubCommit, GoogleCommit? googleCommit, GitHubPullRequest? pullRequest, GitHubRelease? release, string message = "")
         {
             RepoName = repoName;
             Advisory = advisory;
-            Commit = commit;
+            GitHubCommit = gitHubCommit;
+            GoogleGitCommit = googleCommit;
             PullRequest = pullRequest;
             Release = release;
             Message= message;

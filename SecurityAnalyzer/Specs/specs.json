@@ -4,7 +4,9 @@
             "RepoOwner": "karma-runner",
             "RepoName": "karma",
             "Cves": [
-                "CVE-2021-2349"
+                "CVE-2021-2349",
+                "CVE-2021-23495",
+                "CVE-2022-0437"
             ],
             "VersionTagPerfix": "v"
         },
@@ -20,7 +22,12 @@
             "RepoOwner": "electron",
             "RepoName": "electron",
             "Cves": [
-                "CVE-2023-4863"
+                "CVE-2023-4863",
+                "CVE-2023-5217",
+                "CVE-2023-39956",
+                "CVE-2023-29198",
+                "CVE-2023-23623",
+                "CVE-2022-4135"
             ],
             "VersionTagPerfix": "v"
         },
@@ -28,7 +35,8 @@
             "RepoOwner": "mongodb",
             "RepoName": "mongo",
             "Cves": [
-                "CVE-2022-24272"
+                "CVE-2022-24272",
+                "CVE-2021-32050"
             ],
             "VersionTagPerfix": "r"
         },
@@ -37,7 +45,8 @@
             "RepoName": "django",
             "Cves": [
                 "CVE-2023-36053",
-                "CVE-2023-31047"
+                "CVE-2023-31047",
+                "CVE-2023-24580"
             ],
             "VersionTagPerfix": ""
         },
@@ -45,7 +54,12 @@
             "RepoOwner": "dotnet",
             "RepoName": "runtime",
             "Cves": [
-                "CVE-2023-38180"
+                "CVE-2023-38180",
+                "CVE-2023-36792",
+                "CVE-2023-36794",
+                "CVE-2023-36793",
+                "CVE-2023-36796",
+                "CVE-2023-36799"
             ],
             "VersionTagPerfix": "v"
         },
@@ -53,9 +67,92 @@
             "RepoOwner": "square",
             "RepoName": "Retrofit",
             "Cves": [
-                "CVE-2018-1000844"
+                "CVE-2018-1000844",
+                "CVE-2018-1000850"
             ],
             "VersionTagPerfix": "parent-"
+        },
+        {
+            "RepoOwner": "Google",
+            "RepoName": "Google-Platform",
+            "Cves": [
+                "CVE-2023-35673",
+                "CVE-2023-35670",
+                "CVE-2023-21268",
+                "CVE-2023-35683",
+                "CVE-2023-21284",
+                "CVE-2023-21272",
+                "CVE-2023-21251",
+                "CVE-2023-20960"
+            ],
+            "VersionTagPerfix": ""
+        },
+        {
+            "RepoOwner": "tensorflow",
+            "RepoName": "tensorflow",
+            "Cves": [
+                "CVE-2023-25661",
+                "CVE-2023-25659",
+                "CVE-2023-25660",
+                "CVE-2023-25662",
+                "CVE-2023-25663",
+                "CVE-2023-25664",
+                "CVE-2023-25665",
+                "CVE-2023-25668"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "facebook",
+            "RepoName": "react",
+            "Cves": [
+                "CVE-2023-5654"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "facebook",
+            "RepoName": "hermes",
+            "Cves": [
+                "CVE-2022-32234",
+                "CVE-2022-35289",
+                "CVE-2022-40138",
+                "CVE-2020-1896",
+                "CVE-2021-24037",
+                "CVE-2020-1914",
+                "CVE-2020-1913",
+                "CVE-2020-1912",
+                "CVE-2020-1911",
+                "CVE-2021-24044",
+                "CVE-2021-24045"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "angular",
+            "RepoName": "angular",
+            "Cves": [
+                "CVE-2021-4231"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "ag-grid",
+            "RepoName": "ag-grid",
+            "Cves": [
+                "CVE-2017-16009"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "python",
+            "RepoName": "cpython",
+            "Cves": [
+                "CVE-2023-41105",
+                "CVE-2023-38898",
+                "CVE-2023-33595"
+            ],
+            "VersionTagPrefix": "v"
         }
     ]
 }
