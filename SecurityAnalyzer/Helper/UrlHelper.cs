@@ -73,7 +73,15 @@ namespace SecurityAnalyzer.Helper
             return pullNumbers;
         }
 
-
+        /// <summary>
+        /// Analyzes each url for a url that matches a Google Git commit.
+        /// </summary>
+        /// <param name="urls">
+        /// The URLs to analyze.
+        /// </param>
+        /// <returns>
+        /// <see cref="IEnumerable{T}"/> of <see cref="string"/> commit ids
+        /// </returns>
         public static IEnumerable<string> AnalyzeForGoogleGitCommits(IEnumerable<string> urls)
         {
             List<string> commitUrls = new();

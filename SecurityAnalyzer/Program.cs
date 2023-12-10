@@ -4,13 +4,16 @@ using SecurityAnalyzer.Services;
 
 static async Task RunAsync()
 {
+    // Read app settings.
     IConfiguration configuration = new ConfigurationBuilder()
             .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
             .Build();
 
+    // Process specs.
     GitHubProcessor gitHubProcessor = new(configuration, new GoogleGitProcessor());
 
+    // Determine patch time of each analysis.
     IEnumerable<GitHubSecurityAnalysis> analyses = await gitHubProcessor.GetSecurityAnalysisAsync();
     foreach (GitHubSecurityAnalysis analysis in analyses)
     {
@@ -47,6 +50,7 @@ static async Task RunAsync()
         analysis.EndOfExposure = dates.OrderByDescending(d => d).FirstOrDefault();
     }
     
+    // Generate the JSON report.
     await ReportService.GenerateReportAsync(analyses);
 }
 

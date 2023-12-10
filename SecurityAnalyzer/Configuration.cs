@@ -7,8 +7,14 @@ using System.Threading.Tasks;
 
 namespace SecurityAnalyzer
 {
+    /// <summary>
+    /// The configuration to use for this application.
+    /// </summary>
     internal class Configuration
     {
+        /// <summary>
+        /// The security specs to analyze.
+        /// </summary>
         public IEnumerable<SecuritySpec>? SecuritySpecs { get; set; }
     }
 }

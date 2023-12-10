@@ -3,8 +3,17 @@ using SecurityAnalyzer.DataModels.GitHub;
 
 namespace SecurityAnalyzer.Services
 {
+    /// <summary>
+    /// Helps write the report output.
+    /// </summary>
     internal class ReportService
     {
+        /// <summary>
+        /// Generates a JSON report for the final analyses.
+        /// </summary>
+        /// <param name="analyses">
+        /// <see cref="IEnumerable{T}"/> of <see cref="GitHubSecurityAnalysis"/>
+        /// </param>
         public static async Task GenerateReportAsync(IEnumerable<GitHubSecurityAnalysis> analyses)
         {
             try

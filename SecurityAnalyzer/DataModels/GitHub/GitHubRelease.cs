@@ -11,6 +11,9 @@ namespace SecurityAnalyzer.DataModels.GitHub
         public ReleaseMessage? Message { get; set; }
     }
 
+    /// <summary>
+    /// The release message on GitHub.
+    /// </summary>
     public class ReleaseMessage
     {
         [JsonProperty("url")]

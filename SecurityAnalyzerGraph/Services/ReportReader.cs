@@ -1,18 +1,30 @@
 ﻿using Newtonsoft.Json;
 using SecurityAnalyzer.DataModels.GitHub;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SecurityAnalyzerGraph.Services
 {
+    /// <summary>
+    /// Helps read the analysis report built by the SecurityAnalzyer project.
+    /// </summary>
     internal static class ReportReader
     {
-        public static async Task<IEnumerable<GitHubSecurityAnalysis>> ReadAnalysesAsync()
+        /// <summary>
+        /// Reads the analysis report for analyses.
+        /// </summary>
+        /// <param name="path">
+        /// The aboslute path to the report JSON.
+        /// </param>
+        /// <returns>
+        /// <see cref="IEnumerable{T}"/> of <see cref="GitHubSecurityAnalysis"/> generated
+        /// by the SecurityAnalzyer project.
+        /// </returns>
+        /// <exception cref="JsonSerializationException">
+        /// Thrown if the file cannot be deserialzed into a 
+        /// <see cref="IEnumerable{T}"/> of <see cref="GitHubSecurityAnalysis"/>.
+        /// </exception>
+        public static async Task<IEnumerable<GitHubSecurityAnalysis>> ReadAnalysesAsync(string path)
         {
-            string json = await File.ReadAllTextAsync(@"C:\Workspace\CS700B\security-analyzer-client\SecurityAnalyzerGraph\Reports\2023-10-12 13-52-37-report.json");
+            string json = await File.ReadAllTextAsync(path);
             IEnumerable<GitHubSecurityAnalysis> analyses = JsonConvert.DeserializeObject<IEnumerable<GitHubSecurityAnalysis>>(json)
                 ?? throw new JsonSerializationException("Could not deserialzie security spec json.");
 

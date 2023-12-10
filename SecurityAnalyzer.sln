@@ -5,7 +5,7 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecurityAnalyzer", "SecurityAnalyzer\SecurityAnalyzer.csproj", "{8CDDA764-7EF2-46DF-9713-91C8CF54EF53}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityAnalyzerGraph", "SecurityAnalyzerGraph\SecurityAnalyzerGraph.csproj", "{22E56045-6678-465E-853B-0275775444CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecurityAnalyzerGraph", "SecurityAnalyzerGraph\SecurityAnalyzerGraph.csproj", "{22E56045-6678-465E-853B-0275775444CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

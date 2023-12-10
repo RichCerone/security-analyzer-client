@@ -1,32 +1,65 @@
-﻿using ScottPlot;
-using ScottPlot.Plottable;
+﻿using Microsoft.Extensions.Configuration;
 using SecurityAnalyzer.DataModels.GitHub;
-using SecurityAnalyzerGraph.DataModels;
+using SecurityAnalyzerGraph;
+using SecurityAnalyzerGraph.Helpers;
 using SecurityAnalyzerGraph.Services;
 
-IEnumerable<GitHubSecurityAnalysis> analyses = await ReportReader.ReadAnalysesAsync();
+IConfiguration configuration = new ConfigurationBuilder()
+            .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .Build();
 
-List<ClosureResponse> coordinates = CoordinateGenerator.GenerateClosureResponseForCve(analyses);
+// Load appsettings values.
+GraphType graphType = Enum.Parse<GraphType>(configuration.GetSection("GraphType").Value);
+bool isAscending = bool.Parse(configuration.GetSection("AscendingOrder").Value);
+double valueLimit = int.Parse(configuration.GetSection("ValueLimit").Value);
+string path = @$"{configuration.GetSection("ReportPath").Value}";
 
-IEnumerable<string> yLabels = coordinates.Select(y => y.RepoName);
-IEnumerable<double> yAxis = coordinates.Select(y => y.TimeToClose);
+// Read in values and get sample.
+IEnumerable <GitHubSecurityAnalysis> analyses = await ReportReader.ReadAnalysesAsync(path);
+IEnumerable<double> values = Enumerable.Empty<double>();
+switch (graphType)
+{
+    case GraphType.DaysResolved:
 
-IEnumerable<string> xLabels = coordinates.Select(x => x.Cve);
-IEnumerable<double> xAxis = coordinates.Select(x => (double)coordinates.IndexOf(x));
+        values = CoordinateGenerator.GenerateMedianClosurePerCve(analyses, ascending: isAscending).Select(c => c.TimeToClose); 
+        break;
 
-xAxis = DataGen.Consecutive(xAxis.Count());
+    case GraphType.MostAffectedRepo:
+        values = CoordinateGenerator.GenerateMostAffectedRepos(analyses, ascending: isAscending).Where(c => c.NumberOfCves > 1).Select(c => c.NumberOfCves);
+        break;
 
-Plot plot = new(600, 400);
+    case GraphType.RepoWithMostCves:
+        values = CoordinateGenerator.GenerateMostAffectedRepos(analyses, ascending: isAscending).Select(c => c.NumberOfCves);
+        break;
 
-var scatter = plot.AddScatter(xAxis.ToArray(), yAxis.ToArray());
+    case GraphType.MostAffectiveCve:
+        values = CoordinateGenerator.GenerateMostAffectiveCves(analyses, ascending: isAscending).Select(c => c.NumberOfRepos);
+        break;
+}
 
-plot.XAxis.ManualTickPositions(xAxis.ToArray(), xLabels.ToArray());
-plot.YAxis.ManualTickPositions(yAxis.ToArray(), yAxis.Select(y => y.ToString()).ToArray());
+// Calculate min, max, median and standard deviation.
+Console.WriteLine($"Min: {Statistics.GetMin(values)}");
+Console.WriteLine($"Max: {Statistics.GetMax(values)}");
+Console.WriteLine($"Median: {Statistics.GetMedian(values)}");
+Console.WriteLine($"Standard Deviation: {Statistics.GetStandardDeviation(values)}");
 
+// Build graph.
+switch (graphType)
+{
+    case GraphType.DaysResolved:
+        GraphBuilder.BuildDaysResolvedGraph(analyses, ascending: true, valueLimit);
+        break;
 
-plot.XAxis.SetSizeLimit(min: 50);
-plot.XAxis.TickLabelStyle(rotation: 45);
+    case GraphType.MostAffectedRepo:
+        GraphBuilder.BuildMostAffectedRepoGraph(analyses, ascending: true, valueLimit);
+        break;
 
-scatter.DataPointLabels = yLabels.ToArray();
+    case GraphType.RepoWithMostCves:
+        GraphBuilder.BuildRepoWithMostCvesGraph(analyses, ascending: true, valueLimit);
+        break;
 
-new FormsPlotViewer(plot).ShowDialog();
+    case GraphType.MostAffectiveCve:
+        GraphBuilder.BuildMostAffectiveCveGraph(analyses, ascending: true, valueLimit);
+        break;
+}

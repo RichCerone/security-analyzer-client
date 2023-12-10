@@ -46,7 +46,10 @@
             "Cves": [
                 "CVE-2023-36053",
                 "CVE-2023-31047",
-                "CVE-2023-24580"
+                "CVE-2023-24580",
+                "CVE-2023-43665",
+                "CVE-2023-41164",
+                "CVE-2023-46695"
             ],
             "VersionTagPerfix": ""
         },
@@ -59,7 +62,8 @@
                 "CVE-2023-36794",
                 "CVE-2023-36793",
                 "CVE-2023-36796",
-                "CVE-2023-36799"
+                "CVE-2023-36799",
+                "CVE-2023-36049"
             ],
             "VersionTagPerfix": "v"
         },
@@ -151,6 +155,878 @@
                 "CVE-2023-41105",
                 "CVE-2023-38898",
                 "CVE-2023-33595"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "hazelcast",
+            "RepoName": "hazelcast",
+            "Cves": [
+                "CVE-2021-44228"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "apache",
+            "RepoName": "logging-log4j2",
+            "Cves": [
+                "CVE-2021-44228",
+                "CVE-2021-45046"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "hashicorp",
+            "RepoName": "consul",
+            "Cves": [
+                "CVE-2021-36213",
+                "CVE-2022-38149"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "spring-cloud",
+            "RepoName": "spring-cloud-function",
+            "Cves": [
+                "CVE-2022-22963"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "hazelcast",
+            "RepoName": "hazelcast",
+            "Cves": [
+                "CVE-2021-45046"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "cjvnjde",
+            "RepoName": "google-translate-api-browser",
+            "Cves": [
+                "CVE-2023-48711"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "aio-libs",
+            "RepoName": "aiohttp",
+            "Cves": [
+                "CVE-2023-49081"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "pyload",
+            "RepoName": "pyload",
+            "Cves": [
+                "CVE-2023-47890"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "xwiki",
+            "RepoName": "xwiki-platform",
+            "Cves": [
+                "CVE-2023-48241"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "nearform",
+            "RepoName": "fast-jwt",
+            "Cves": [
+                "CVE-2023-48223"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "joaquimserafim",
+            "RepoName": "json-web-token",
+            "Cves": [
+                "CVE-2023-48238"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "pimcore",
+            "RepoName": "pimcore",
+            "Cves": [
+                "CVE-2023-47637"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "yt-dlp",
+            "RepoName": "yt-dlp",
+            "Cves": [
+                "CVE-2023-46121"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "stleary",
+            "RepoName": "JSON-java",
+            "Cves": [
+                "CVE-2023-5072"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "HumanSignal",
+            "RepoName": "label-studio",
+            "Cves": [
+                "CVE-2023-47117"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "ethyca",
+            "RepoName": "fides",
+            "Cves": [
+                "CVE-2023-47114"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "nautobot",
+            "RepoName": "nautobot",
+            "Cves": [
+                "CVE-2023-46128"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "tauri-apps",
+            "RepoName": "tauri",
+            "Cves": [
+                "CVE-2023-46115"
+            ],
+            "VersionTagPrefix": "tauri-cli-v"
+        },
+        {
+            "RepoOwner": "artifacthub",
+            "RepoName": "hub",
+            "Cves": [
+                "CVE-2023-45822"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "urllib3",
+            "RepoName": "urllib3",
+            "Cves": [
+                "CVE-2023-45803"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "cachethq",
+            "RepoName": "cachet",
+            "Cves": [
+                "CVE-2023-43661"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "tinymce",
+            "RepoName": "tinymce",
+            "Cves": [
+                "CVE-2023-48219",
+                "CVE-2023-45818"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "hyperledger",
+            "RepoName": "fabric",
+            "Cves": [
+                "CVE-2023-46132"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "strapi",
+            "RepoName": "strapi",
+            "Cves": [
+                "CVE-2023-39345"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "kubernetes",
+            "RepoName": "kubernetes",
+            "Cves": [
+                "CVE-2023-3676",
+                "CVE-2023-3955",
+                "CVE-2023-5528",
+                "CVE-2021-25736"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "quic-go",
+            "RepoName": "quic-go",
+            "Cves": [
+                "CVE-2023-46239"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "directus",
+            "RepoName": "directus",
+            "Cves": [
+                "CVE-2023-45820"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "cilium",
+            "RepoName": "cilium",
+            "Cves": [
+                "CVE-2023-41332"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "postcss",
+            "RepoName": "postcss",
+            "Cves": [
+                "CVE-2023-44270"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "gomarkdown",
+            "RepoName": "markdown",
+            "Cves": [
+                "CVE-2023-42821"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "ethereum",
+            "RepoName": "go-ethereum",
+            "Cves": [
+                "CVE-2023-40591"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "eclipse-leshan",
+            "RepoName": "leshan",
+            "Cves": [
+                "CVE-2023-41034"
+            ],
+            "VersionTagPrefix": "leshan-"
+        },
+        {
+            "RepoOwner": "libp2p",
+            "RepoName": "go-libp2p",
+            "Cves": [
+                "CVE-2023-40583"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "endojs",
+            "RepoName": "endo",
+            "Cves": [
+                "CVE-2023-39532",
+                "CVE-2023-39533"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "node-saml",
+            "RepoName": "node-saml",
+            "Cves": [
+                "CVE-2023-40178"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "apache",
+            "RepoName": "storm",
+            "Cves": [
+                "CVE-2023-43123"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "sbt",
+            "RepoName": "sbt",
+            "Cves": [
+                "CVE-2023-46122"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "rabbitmq",
+            "RepoName": "rabbitmq-java-client",
+            "Cves": [
+                "CVE-2023-46120"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "jetty",
+            "RepoName": "jetty.project",
+            "Cves": [
+                "CVE-2023-36478",
+                "CVE-2023-41900",
+                "CVE-2023-36479",
+                "CVE-2023-40167"
+            ],
+            "VersionTagPrefix": "jetty-"
+        },
+        {
+            "RepoOwner": "micronaut-projects",
+            "RepoName": "micronaut-security",
+            "Cves": [
+                "CVE-2023-36820"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "netty",
+            "RepoName": "netty",
+            "Cves": [
+                "CVE-2023-4586"
+            ],
+            "VersionTagPrefix": "netty-"
+        },
+        {
+            "RepoOwner": "apache",
+            "RepoName": "avro",
+            "Cves": [
+                "CVE-2023-39410"
+            ],
+            "VersionTagPrefix": "release-"
+        },
+        {
+            "RepoOwner": "xerial",
+            "RepoName": "snappy-java",
+            "Cves": [
+                "CVE-2023-43642"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "OpenRefine",
+            "RepoName": "OpenRefine",
+            "Cves": [
+                "CVE-2023-41887",
+                "CVE-2023-41886"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "louislam",
+            "RepoName": "uptime-kuma",
+            "Cves": [
+                "CVE-2023-49276"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "open-telemetry",
+            "RepoName": "opentelemetry-go-contrib",
+            "Cves": [
+                "CVE-2023-47108"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "getsentry",
+            "RepoName": "sentry-javascript",
+            "Cves": [
+                "CVE-2023-46729"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "authzed",
+            "RepoName": "spicedb",
+            "Cves": [
+                "CVE-2023-46255"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "kubernetes",
+            "RepoName": "kops",
+            "Cves": [
+                "CVE-2023-1943"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "apple",
+            "RepoName": "swift-nio-http2",
+            "Cves": [
+                "CVE-2023-44487",
+                "CVE-2022-0618",
+                "CVE-2022-24668",
+                "CVE-2022-24666",
+                "CVE-2022-24667"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "vapor",
+            "RepoName": "vapor",
+            "Cves": [
+                "CVE-2023-44386",
+                "CVE-2022-31005",
+                "CVE-2022-31019"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "marmelroy",
+            "RepoName": "Zip",
+            "Cves": [
+                "CVE-2023-39135"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "Webklex",
+            "RepoName": "php-imap",
+            "Cves": [
+                "CVE-2023-35169"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "grpc",
+            "RepoName": "grpc-swift",
+            "Cves": [
+                "CVE-2021-36153",
+                "CVE-2021-36155",
+                "CVE-2021-36154"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "apple",
+            "RepoName": "swift-corelibs-foundation",
+            "Cves": [
+                "CVE-2022-1642"
+            ],
+            "VersionTagPrefix": "swift-"
+        },
+        {
+            "RepoOwner": "apple",
+            "RepoName": "swift-nio-extras",
+            "Cves": [
+                "CVE-2022-3252"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "apple",
+            "RepoName": "swift-nio",
+            "Cves": [
+                "CVE-2022-3215"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "swift-server",
+            "RepoName": "async-http-client",
+            "Cves": [
+                "CVE-2023-0040"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "vapor",
+            "RepoName": "postgres-nio",
+            "Cves": [
+                "CVE-2023-31136"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "openstack",
+            "RepoName": "swift",
+            "Cves": [
+                "CVE-2014-0006",
+                "CVE-2016-0738",
+                "CVE-2015-5223"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "eclipse-platform",
+            "RepoName": "eclipse.platform",
+            "Cves": [
+                "CVE-2023-4218"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "apache",
+            "RepoName": "cocoon",
+            "Cves": [
+                "CVE-2023-49733",
+                "CVE-2022-45135"
+            ],
+            "VersionTagPrefix": "cocoon-"
+        },
+        {
+            "RepoOwner": "apache",
+            "RepoName": "dolphinscheduler",
+            "Cves": [
+                "CVE-2023-49620",
+                "CVE-2023-49068",
+                "CVE-2023-48796"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "apache",
+            "RepoName": "tomcat",
+            "Cves": [
+                "CVE-2023-46589",
+                "CVE-2023-45648",
+                "CVE-2023-42794",
+                "CVE-2023-42795",
+                "CVE-2023-41080",
+                "CVE-2023-28709"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "apache",
+            "RepoName": "superset",
+            "Cves": [
+                "CVE-2023-42505",
+                "CVE-2023-42504",
+                "CVE-2023-42502",
+                "CVE-2023-40610",
+                "CVE-2023-42501",
+                "CVE-2023-43701",
+                "CVE-2023-39265",
+                "CVE-2023-37941",
+                "CVE-2023-32672",
+                "CVE-2023-36387",
+                "CVE-2023-27526",
+                "CVE-2023-36388",
+                "CVE-2023-27523",
+                "CVE-2023-39264"
+            ],
+            "VersionTagPrefix": "superset-helm-chart-"
+        },
+        {
+            "RepoOwner": "apache",
+            "RepoName": "activemq",
+            "Cves": [
+                "CVE-2022-41678",
+                "CVE-2023-46604"
+            ],
+            "VersionTagPrefix": "activemq-"
+        },
+        {
+            "RepoOwner": "apache",
+            "RepoName": "nifi",
+            "Cves": [
+                "CVE-2023-49145",
+                "CVE-2023-36542"
+            ],
+            "VersionTagPrefix": "rel/nifi-"
+        },
+        {
+            "RepoOwner": "apache",
+            "RepoName": "submarine",
+            "Cves": [
+                "CVE-2023-37924"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "apache",
+            "RepoName": "hadoop",
+            "Cves": [
+                "CVE-2023-26031"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "apache",
+            "RepoName": "airflow",
+            "Cves": [
+                "CVE-2023-42781",
+                "CVE-2023-47037",
+                "CVE-2023-42663",
+                "CVE-2023-45348",
+                "CVE-2023-42780",
+                "CVE-2023-42792",
+                "CVE-2023-40712",
+                "CVE-2023-40611",
+                "CVE-2023-40195",
+                "CVE-2023-27604",
+                "CVE-2023-39441",
+                "CVE-2023-39553",
+                "CVE-2023-39508",
+                "CVE-2023-37415",
+                "CVE-2023-35908",
+                "CVE-2023-22887",
+                "CVE-2023-22888",
+                "CVE-2022-46651",
+                "CVE-2023-33234"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "ronf",
+            "RepoName": "asyncssh",
+            "Cves": [
+                "CVE-2023-46446",
+                "CVE-2023-46445"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "apache",
+            "RepoName": "arrow",
+            "Cves": [
+                "CVE-2023-46215",
+                "CVE-2023-46288"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "apache",
+            "RepoName": "inlong",
+            "Cves": [
+                "CVE-2023-46227",
+                "CVE-2023-43668",
+                "CVE-2023-43667",
+                "CVE-2023-34434",
+                "CVE-2023-35088",
+                "CVE-2023-34189",
+                "CVE-2023-31065",
+                "CVE-2023-31058",
+                "CVE-2023-31058",
+                "CVE-2023-31453",
+                "CVE-2023-31206",
+                "CVE-2023-31103",
+                "CVE-2023-31454",
+                "CVE-2023-31064"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "apache",
+            "RepoName": "shenyu",
+            "Cves": [
+                "CVE-2023-25753"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "apache",
+            "RepoName": "zookeeper",
+            "Cves": [
+                "CVE-2023-44981"
+            ],
+            "VersionTagPrefix": "release-"
+        },
+        {
+            "RepoOwner": "apache",
+            "RepoName": "commons-compress",
+            "Cves": [
+                "CVE-2023-42503"
+            ],
+            "VersionTagPrefix": "commons-compress-"
+        },
+        {
+            "RepoOwner": "OpenMage",
+            "RepoName": "magento-lts",
+            "Cves": [
+                "CVE-2023-41879"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "spring-projects",
+            "RepoName": "spring-kafka",
+            "Cves": [
+                "CVE-2023-34040"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "aerospike",
+            "RepoName": "aerospike-client-java",
+            "Cves": [
+                "CVE-2023-36480"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "apache",
+            "RepoName": "felix-dev",
+            "Cves": [
+                "CVE-2023-38435"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "apache",
+            "RepoName": "jackrabbit",
+            "Cves": [
+                "CVE-2023-37895"
+            ],
+            "VersionTagPrefix": "jackrabbit-"
+        },
+        {
+            "RepoOwner": "apache",
+            "RepoName": "shiro",
+            "Cves": [
+                "CVE-2023-34478"
+            ],
+            "VersionTagPrefix": "shiro-root"
+        },
+        {
+            "RepoOwner": "apache",
+            "RepoName": "shardingsphere",
+            "Cves": [
+                "CVE-2023-28754"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "apache",
+            "RepoName": "pulsar",
+            "Cves": [
+                "CVE-2023-37579",
+                "CVE-2023-31007",
+                "CVE-2023-30429",
+                "CVE-2023-30428"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "apache",
+            "RepoName": "rocketmq",
+            "Cves": [
+                "CVE-2023-37582",
+                "CVE-2023-33246"
+            ],
+            "VersionTagPrefix": "rocketmq-all-"
+        },
+        {
+            "RepoOwner": "apache",
+            "RepoName": "ambari",
+            "Cves": [
+                "CVE-2022-45855"
+            ],
+            "VersionTagPrefix": "release-"
+        },
+        {
+            "RepoOwner": "apache",
+            "RepoName": "jena",
+            "Cves": [
+                "CVE-2023-32200"
+            ],
+            "VersionTagPrefix": "jena-"
+        },
+        {
+            "RepoOwner": "apache",
+            "RepoName": "mina-sshd",
+            "Cves": [
+                "CVE-2023-35887"
+            ],
+            "VersionTagPrefix": "sshd-"
+        },
+        {
+            "RepoOwner": "apache",
+            "RepoName": "camel",
+            "Cves": [
+                "CVE-2023-34442"
+            ],
+            "VersionTagPrefix": "camel-"
+        },
+        {
+            "RepoOwner": "apache",
+            "RepoName": "johnzon",
+            "Cves": [
+                "CVE-2023-33008"
+            ],
+            "VersionTagPrefix": "johnzon-"
+        },
+        {
+            "RepoOwner": "apache",
+            "RepoName": "cassandra",
+            "Cves": [
+                "CVE-2023-30601"
+            ],
+            "VersionTagPrefix": "cassandra-"
+        },
+        {
+            "RepoOwner": "apache",
+            "RepoName": "openmeetings",
+            "Cves": [
+                "CVE-2023-28936"
+            ],
+            "VersionTagPrefix": "openmeetings-"
+        },
+        {
+            "RepoOwner": "apache",
+            "RepoName": "ranger",
+            "Cves": [
+                "CVE-2022-45048"
+            ],
+            "VersionTagPrefix": "releases-"
+        },
+        {
+            "RepoOwner": "hashicorp",
+            "RepoName": "vault",
+            "Cves": [
+                "CVE-2023-0620",
+                "CVE-2023-5954",
+                "CVE-2023-5077",
+                "CVE-2023-4680",
+                "CVE-2023-3462",
+                "CVE-2023-24999",
+                "CVE-2022-41316",
+                "CVE-2023-2121",
+                "CVE-2023-25000",
+                "CVE-2023-0665",
+                "CVE-2022-40186",
+                "CVE-2022-30689",
+                "CVE-2021-43998",
+                "CVE-2021-42135",
+                "CVE-2021-38553",
+                "CVE-2021-38554",
+                "CVE-2020-16250",
+                "CVE-2020-7220",
+                "CVE-2021-32923",
+                "CVE-2020-13223",
+                "CVE-2020-12757"
+            ],
+            "VersionTagPrefix": "v"
+        },
+        {
+            "RepoOwner": "jenkinsci",
+            "RepoName": "hashicorp-vault-plugin",
+            "Cves": [
+                "CVE-2022-36888",
+                "CVE-2022-25186",
+                "CVE-2022-25197",
+                "CVE-2022-23109"
+            ],
+            "VersionTagPrefix": ""
+        },
+        {
+            "RepoOwner": "hashicorp",
+            "RepoName": "vault-action",
+            "Cves": [
+                "CVE-2021-32074"
             ],
             "VersionTagPrefix": "v"
         }

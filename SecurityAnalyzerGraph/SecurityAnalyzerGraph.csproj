@@ -16,4 +16,10 @@
     <ProjectReference Include="..\SecurityAnalyzer\SecurityAnalyzer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

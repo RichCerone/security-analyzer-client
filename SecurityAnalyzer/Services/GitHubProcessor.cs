@@ -99,6 +99,18 @@ namespace SecurityAnalyzer.Services
             return analyses;
         }
 
+        /// <summary>
+        /// Processes the GitHub security advisory.
+        /// </summary>
+        /// <param name="spec">
+        /// <see cref="SecuritySpec"/> to process.
+        /// </param>
+        /// <param name="cve">
+        /// The CVE id to process.
+        /// </param>
+        /// <returns>
+        /// <see cref="GitHubSecurityAnalysis"/>
+        /// </returns>
         private async Task<GitHubSecurityAnalysis> ProcessAdvisoryAsync(SecuritySpec spec, string cve)
         {
             // Get initial advisory.
@@ -307,6 +319,16 @@ namespace SecurityAnalyzer.Services
             return results.DistinctBy(r => r.Id);
         }
 
+        /// <summary>
+        /// Searches the references results for Google Git commits.
+        /// </summary>
+        /// <param name="references">
+        /// <see cref="IEnumerable{T}"/> of <see cref="string"/> URL reference
+        /// related to the advisory.
+        /// </param>
+        /// <returns>
+        /// <see cref="IEnumerable{T}"/> of <see cref="string"/>
+        /// </returns>
         private static IEnumerable<string> SearchReferencesForGoogleGitCommits(IEnumerable<string> references)
         {
             List<string> results = new();
@@ -439,12 +461,20 @@ namespace SecurityAnalyzer.Services
         }
 
         /// <summary>
-        /// 
+        /// Gets a pull request from GitHub.
         /// </summary>
-        /// <param name="owner"></param>
-        /// <param name="repo"></param>
-        /// <param name="pullNumber"></param>
-        /// <returns></returns>
+        /// <param name="owner">
+        /// The owner of the repo.
+        /// </param>
+        /// <param name="repo">
+        /// The name of the repo.
+        /// </param>
+        /// <param name="pullNumber">
+        /// The pull request id.
+        /// </param>
+        /// <returns>
+        /// <see cref="GitHubPullRequest"/>
+        /// </returns>
         private async Task<GitHubPullRequest?> GetPullRequestAsync(string owner, string repo, int pullNumber)
         {
             GitHubPullRequest? pullRequest = null;
